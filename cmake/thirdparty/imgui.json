@@ -1,0 +1,6 @@
+{
+    "name": "imgui",
+    "git_repository": "https://github.com/ocornut/imgui.git",
+    "git_tag": "v1.71",
+    "argn": ""
+}

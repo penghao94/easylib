@@ -1,0 +1,6 @@
+{
+    "name": "assimp",
+    "git_repository": "https://github.com/assimp/assimp.git",
+    "git_tag": "v.5.0.0.rc1",
+    "argn": ""
+}

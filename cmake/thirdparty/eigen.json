@@ -1,0 +1,6 @@
+{
+    "name": "eigen",
+    "git_repository": "https://github.com/eigenteam/eigen-git-mirror.git",
+    "git_tag": "3.2.10",
+    "argn": "${ELIB_BRANCH_OPTIONS}"
+}

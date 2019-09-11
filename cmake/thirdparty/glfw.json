@@ -1,0 +1,6 @@
+{
+    "name": "glfw",
+    "git_repository": "https://github.com/glfw/glfw.git",
+    "git_tag": "3.3",
+    "argn": ""
+}
