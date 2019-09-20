@@ -84,10 +84,10 @@ endif()
 if(ELIB_WITH_EIGEN)
 	if(TARGET Eigen3::Eigen)
 	  # If an imported target already exists, use it
-	  target_link_libraries(${PROJ}_common INTERFACE Eigen3::Eigen)
+	  target_link_libraries(elib_common INTERFACE Eigen3::Eigen)
 	else()
 	  download_eigen()
-	  target_include_directories(${PROJ}_common SYSTEM INTERFACE
+	  target_include_directories(elib_common SYSTEM INTERFACE
 	    $<BUILD_INTERFACE:${EXTERNAL_DIR}/eigen>
 	    $<INSTALL_INTERFACE:include>
 	  )
@@ -102,6 +102,7 @@ endif()
 
 # Include Module Compile function at CompileModule.cmake
 include(CompileModule)
+include(MsvcHelper)
 # Add elib::core library at first
 compile_module("core")
 
@@ -187,7 +188,5 @@ export(EXPORT elib-export
   FILE "${CMAKE_BINARY_DIR}/easylib-export.cmake"
 )
 install(EXPORT elib-export DESTINATION ${CMAKE_INSTALL_DATADIR}/easylib/cmake FILE easylib-export.cmake)
-
-
 export(PACKAGE easylib)
 

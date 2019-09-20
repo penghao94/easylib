@@ -87,6 +87,7 @@ endforeach()
 
 
 #Add third party libraryoptions to easylib.camke
+message(STATUS "Generate download cache at ${DOWNLOAD_CACHE}")
 set(OPTION_CACHE "${CMAKE_CURRENT_LIST_DIR}/OptionCache.cmake")
 set(OPTION_PREFIX "
 #

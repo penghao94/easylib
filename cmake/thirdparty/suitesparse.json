@@ -1,0 +1,6 @@
+{
+    "name": "suitesparse",
+    "git_repository": "https://github.com/jlblancoc/suitesparse-metis-for-windows.git",
+    "git_tag": "v1.5.0",
+    "argn": ""
+}
