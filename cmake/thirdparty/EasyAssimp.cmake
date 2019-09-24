@@ -4,10 +4,10 @@
 #
 
 ##TODO some bug, but I don't need it....
-set(ASSIMP_DIR "${ELIB_EXTERNAL_DIR}/assimp")
+set(ASSIMP_ROOT_DIR "${ELIB_EXTERNAL_DIR}/assimp")
  
-if(NOT TARGET assimp)
-    message(STATUS "Downloading assimp to ${ASSIMP_DIR}" )
+if(NOT TARGET  elib::assimp)
+    message(STATUS "Downloading assimp to ${ASSIMP_ROOT_DIR}" )
 
     download_assimp()
     
@@ -18,8 +18,8 @@ if(NOT TARGET assimp)
     cmake_policy(SET CMP0072 NEW)
   endif()
   find_package(OpenGL REQUIRED)
-  if(TARGET O "${ASSIMP_DIR}" "assimp")
-    set(ASSIMP_INCLUDE_DIR "${ASSIMP_DIR}/include")
+  if(TARGET O "${ASSIMP_ROOT_DIR}" "assimp")
+    set(ASSIMP_INCLUDE_DIR "${ASSIMP_ROOT_DIR}/include")
   endif()
   
   compile_module("assimp")

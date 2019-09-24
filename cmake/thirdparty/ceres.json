@@ -1,0 +1,6 @@
+{
+    "name": "ceres",
+    "git_repository": "https://github.com/ceres-solver/ceres-solver.git",
+    "git_tag": "1.14.0",
+    "argn": ""
+}

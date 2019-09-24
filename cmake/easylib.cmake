@@ -82,13 +82,14 @@ endif()
 
 # Set Eigen as global math library
 if(ELIB_WITH_EIGEN)
+set(EIGEN_ROOT_DIR ${ELIB_EXTERNAL_DIR}/eigen)
 	if(TARGET Eigen3::Eigen)
 	  # If an imported target already exists, use it
 	  target_link_libraries(elib_common INTERFACE Eigen3::Eigen)
 	else()
 	  download_eigen()
 	  target_include_directories(elib_common SYSTEM INTERFACE
-	    $<BUILD_INTERFACE:${EXTERNAL_DIR}/eigen>
+	    $<BUILD_INTERFACE:${EIGEN_ROOT_DIR}>
 	    $<INSTALL_INTERFACE:include>
 	  )
 	endif()
@@ -103,6 +104,7 @@ endif()
 # Include Module Compile function at CompileModule.cmake
 include(CompileModule)
 include(MsvcHelper)
+include(RequirePackageDir)
 # Add elib::core library at first
 compile_module("core")
 
@@ -123,7 +125,7 @@ function(install_dir_files dir_name)
   endif()
 
   file(GLOB public_headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/${subpath}/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/${subpatinclh}/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/${subpath}/*.hpp
   )
 

@@ -1,4 +1,8 @@
- #Detect MSVC C/C++ complier toolset
+#
+# Copyright(c) 2019 Hao Peng<ph1994wh@gmail.com>.
+# Distributed under the BSD License 
+#
+#Detect MSVC C/C++ complier toolset
  set(VS_TOOLSET "")
  if(${CMAKE_VS_PLATFORM_TOOLSET} STREQUAL "v120")
      set(VS_TOOLSET "Visual Studio 12 2013")
