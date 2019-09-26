@@ -28,6 +28,10 @@ if(NOT TARGET elib::suitesparse)
             message(STATUS "cmake --build . --target INSTALL --config ${SBT}\n" )
             execute_process( COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${SBT} 
                                 WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build OUTPUT_QUIET)
+
+             ##For windows,we have to copy ${LAPACK_DIR}/*.dll to CMAKE_RUNTIME_OUTPUT_DIRECTORY
+             execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LAPACK_DLL} ${CMAKE_BINARY_DIR}/${cbt} WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build  OUTPUT_QUIET)
+
             endforeach()
         else()
             message(FATEL_ERROR "Sorry, we just support MSVC complier on Windows platform...")
