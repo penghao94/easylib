@@ -11,7 +11,7 @@ Esaylib借助于跨平台的C/C++配置与生成工具Cmake来完成C/C++自动�
 
 3. 下图为使用easylib的架构图，在easylib部分。 target: easylib common 封装了整个项目的全局配置属性，target: easylib core 封装了一些不涉及第三方库的公共函数，这两个target作为底层分别被管理第三方库函数的target继承。每个第三方库target都是self-contained的，封装了调用此库所需要的一切配置。虽然target之间会存在相互调用，比如 library C需要调用library A和 library B。但这种调用是隐藏的，用户只需要调用，而不必要显式的调用A和B. 
 
-    ![1.png](https://i.loli.net/2019/09/26/JSNF9VEieRQ8Lj1.png)
+    ![1.png](https://i.loli.net/2019/09/26/zwETLdRG7giZoUh.png)
 
 4. 实际项目的构建是复杂的，这样的复杂可以在架构上可以表现为:
     + 需要将一个大的项目分解成几个相对独立的子项目进行开发和测试，每个项目都会依赖相当数量的第三方库，有时候子项目的依赖是部分相同的。如果每个子项目都独立编写配置文件，则在最后代码合并过程中会大量编译重复依赖，效率低下，如果强行合并项目配置文件，由于依赖的复杂性，则会给项目整合带来困扰。
