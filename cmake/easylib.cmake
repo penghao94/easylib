@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 #Options
-option(USE_STATIC_LIBRARY "Use library as static library" OFF)
+option(USE_STATIC_LIBRARY "Use library as static library" ON)
 option(ELIB_WITH_EIGEN "Use Eigen as the stanard math library" ON)
 option(ELIB_WITH_THREAD "Use C++ 11 thread" ON)
 option(ELIB_EXPORT_TARGETS "Export easylib Cmake targets" OFF)

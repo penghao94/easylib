@@ -19,14 +19,14 @@ if(NOT TARGET elib::suitesparse)
             endif()
             set(BLAS_LIBRARIES "${LAPACK_DIR}/libblas.lib")
             message(STATUS "\ncmake -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/SuiteSparse -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}\n" )
-            execute_process(COMMAND cmake -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}
+            execute_process(COMMAND ${CMAKE_COMMAND} -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}
                                     WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR} OUTPUT_QUIET)
                 
             set(SUITESPARSE_BUILD_TYPE "Debug" "Release")
 
             foreach(SBT ${SUITESPARSE_BUILD_TYPE})
             message(STATUS "cmake --build . --target INSTALL --config ${SBT}\n" )
-            execute_process( COMMAND cmake --build . --target INSTALL --config ${SBT} 
+            execute_process( COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${SBT} 
                                 WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build OUTPUT_QUIET)
             endforeach()
         else()
@@ -42,14 +42,14 @@ if(NOT TARGET elib::suitesparse)
 
         #Install SuiteSparse
         message(STATUS "cmake -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/SuiteSparse -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}\n" )
-        execute_process(COMMAND cmake -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${CMAKE_VS_PLATFORM_NAME} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}
+        execute_process(COMMAND ${CMAKE_COMMAND} -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${CMAKE_VS_PLATFORM_NAME} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}
                                     WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR} OUTPUT_QUIET)
                 
         set(SUITESPARSE_BUILD_TYPE "Debug" "Release")
 
         foreach(SBT ${SUITESPARSE_BUILD_TYPE})
             message(STATUS "cmake --build . --target INSTALL --config ${SBT}\n" )
-            execute_process(COMMAND cmake --build . --config ${SBT} 
+            execute_process(COMMAND ${CMAKE_COMMAND} --build . --config ${SBT} 
                                 WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build OUTPUT_QUIET)
         endforeach()
     endif()
@@ -60,7 +60,7 @@ if(NOT TARGET elib::suitesparse)
     find_package(SuiteSparse)
     if (SuiteSparse_FOUND)
         compile_module("suitesparse")
-        target_include_directories(elib_suitesparse ${ELIB_SCOPE} ${SuiteSparse_INCLUDE_DIRS})
-        target_link_libraries( elib_suitesparse ${ELIB_SCOPE}  ${SuiteSparse_LIBRARIES})
+        target_include_directories(elib_suitesparse ${ELIB_SCOPE_WITH_SUITESPARSE} ${SuiteSparse_INCLUDE_DIRS})
+        target_link_libraries( elib_suitesparse ${ELIB_SCOPE_WITH_SUITESPARSE}  ${SuiteSparse_LIBRARIES})
     endif()
 endif()

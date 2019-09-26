@@ -32,13 +32,13 @@ if(NOT TARGET  elib::glog)
 
             #Configure glog
             message(STATUS "\ncmake -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -DGFLAGS_DIR=${GFLAGS_DIR}\n")
-            execute_process(COMMAND cmake -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -Dgflags_DIR=${GFLAGS_DIR}  -DBUILD_TESTING=false WORKING_DIRECTORY ${GLOG_ROOT_DIR} OUTPUT_QUIET)
+            execute_process(COMMAND ${CMAKE_COMMAND} -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -Dgflags_DIR=${GFLAGS_DIR}  -DBUILD_TESTING=false WORKING_DIRECTORY ${GLOG_ROOT_DIR} OUTPUT_QUIET)
 
             #Build and install glog
             set(GFLAGS_BUILD_TYPE "Debug" "Release")
             foreach(glbt ${GFLAGS_BUILD_TYPE})
                 message(STATUS "cmake -S  execute_process(COMMAND cmake --build . --target INSTALL --config ${glbt}\n")
-                execute_process(COMMAND cmake --build . --target INSTALL --config ${glbt} WORKING_DIRECTORY ${GLOG_ROOT_DIR}/glog-build OUTPUT_QUIET )
+                execute_process(COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${glbt} WORKING_DIRECTORY ${GLOG_ROOT_DIR}/glog-build OUTPUT_QUIET )
             endforeach()
         else()
             message(FATEL_ERROR "Sorry, we just support MSVC complier on Windows platform...")
@@ -46,13 +46,13 @@ if(NOT TARGET  elib::glog)
     else()
         #Configure glog
         message(STATUS "cmake -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -DGFLAGS_DIR=${GFLAGS_DIR}  -DBUILD_TESTING=false\n")
-        execute_process(COMMAND cmake -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -Dgflags_DIR=${GFLAGS_DIR}  -DBUILD_TESTING=false WORKING_DIRECTORY ${GLOG_ROOT_DIR} OUTPUT_QUIET)
+        execute_process(COMMAND ${CMAKE_COMMAND} -S ${GLOG_ROOT_DIR} -B ${GLOG_ROOT_DIR}/glog-build -DCMAKE_INSTALL_PREFIX=${GLOG_ROOT_DIR}/glog-install -DWITH_GFLAGS=true -Dgflags_DIR=${GFLAGS_DIR}  -DBUILD_TESTING=false WORKING_DIRECTORY ${GLOG_ROOT_DIR} OUTPUT_QUIET)
 
         #Build and install glog
         set(GFLAGS_BUILD_TYPE "Debug" "Release")
         foreach(glbt ${GFLAGS_BUILD_TYPE})
             message(STATUS "cmake --build . --config ${glbt}\n")
-            execute_process(COMMAND cmake --build . --config ${glbt} WORKING_DIRECTORY ${GLOG_ROOT_DIR}/glog-build OUTPUT_QUIET)
+            execute_process(COMMAND ${CMAKE_COMMAND} --build . --config ${glbt} WORKING_DIRECTORY ${GLOG_ROOT_DIR}/glog-build OUTPUT_QUIET)
         endforeach()
     endif()
 
@@ -63,6 +63,6 @@ if(NOT TARGET  elib::glog)
 
     if(glog_FOUND)
         compile_module("glog")
-        target_link_libraries(elib_glog ${ELIB_SCOPE} glog::glog)
+        target_link_libraries(elib_glog ${ELIB_SCOPE_WITH_GLOG} glog::glog)
     endif()
 endif()

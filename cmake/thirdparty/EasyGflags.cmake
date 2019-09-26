@@ -12,13 +12,13 @@ if(NOT TARGET  elib::gflags)
         if(MSVC)
             #Configure gflags
             message(STATUS "\ncmake -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false\n")
-            execute_process(COMMAND cmake -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false WORKING_DIRECTORY ${GFLAGS_ROOT_DIR} OUTPUT_QUIET)
+            execute_process(COMMAND ${CMAKE_COMMAND} -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false WORKING_DIRECTORY ${GFLAGS_ROOT_DIR} OUTPUT_QUIET)
 
             #Build and install gflags
             set(GFLAGS_BUILD_TYPE "Debug" "Release")
             foreach(gfbt ${GFLAGS_BUILD_TYPE})
                 message(STATUS "cmake --build . --target INSTALL --config ${gfbt}\n" )
-                execute_process(COMMAND cmake --build . --target INSTALL --config ${gfbt} WORKING_DIRECTORY ${GFLAGS_ROOT_DIR}/gflags-build OUTPUT_QUIET )
+                execute_process(COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${gfbt} WORKING_DIRECTORY ${GFLAGS_ROOT_DIR}/gflags-build OUTPUT_QUIET )
             endforeach()
         else()
             message(FATEL_ERROR "Sorry, we just support MSVC complier on Windows platform...")
@@ -26,13 +26,13 @@ if(NOT TARGET  elib::gflags)
     else()
         #Configure gflags
         message(STATUS "cmake -S cmake -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false\n")
-        execute_process(COMMAND cmake -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false WORKING_DIRECTORY ${GFLAGS_ROOT_DIR} OUTPUT_QUIET)
+        execute_process(COMMAND ${CMAKE_COMMAND} -S ${GFLAGS_ROOT_DIR} -B ${GFLAGS_ROOT_DIR}/gflags-build -DCMAKE_INSTALL_PREFIX=${GFLAGS_ROOT_DIR}/install -DBUILD_TESTING=false WORKING_DIRECTORY ${GFLAGS_ROOT_DIR} OUTPUT_QUIET)
 
         #Build and install gflags
         set(GFLAGS_BUILD_TYPE "Debug" "Release")
         foreach(gfbt ${GFLAGS_BUILD_TYPE})
             message(STATUS "cmake --build . --config ${gfbt}\n" )
-            execute_process(COMMAND cmake --build . --config ${gfbt}WORKING_DIRECTORY ${GFLAGS_ROOT_DIR}/gflags-build OUTPUT_QUIET)
+            execute_process(COMMAND ${CMAKE_COMMAND} --build . --config ${gfbt}WORKING_DIRECTORY ${GFLAGS_ROOT_DIR}/gflags-build OUTPUT_QUIET)
         endforeach()
     endif()
 
@@ -43,7 +43,7 @@ if(NOT TARGET  elib::gflags)
 
     if(gflags_FOUND)
         compile_module("gflags")
-        target_include_directories(elib_gflags ${ELIB_SCOPE} ${GFLAGS_INCLUDE_DIR})
-        target_link_libraries(elib_gflags ${ELIB_SCOPE} ${GFLAGS_LIBRARIES})
+        target_include_directories(elib_gflags ${ELIB_SCOPE_WITH_GFLAGS} ${GFLAGS_INCLUDE_DIR})
+        target_link_libraries(elib_gflags ${ELIB_SCOPE_WITH_GFLAGS} ${GFLAGS_LIBRARIES})
     endif()
 endif()

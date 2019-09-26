@@ -24,5 +24,5 @@ if(NOT TARGET  elib::assimp)
   
   compile_module("assimp")
   
-  target_link_libraries(elib_assimp ${ELIB_SCOPE} assimp)
-  target_include_directories(elib_assimp ${ELIB_SCOPE} ${ASSIMP_INCLUDE_DIR})
+  target_link_libraries(elib_assimp ${ELIB_SCOPE_WITH_ASSIMP} assimp)
+  target_include_directories(elib_assimp ${ELIB_SCOPE_WITH_ASSIMP} ${ASSIMP_INCLUDE_DIR})
