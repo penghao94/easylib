@@ -117,6 +117,21 @@ endif()
 + [Suitesaprse(optional)](http://faculty.cs.tamu.edu/davis/suitesparse.html) [Windows,Linux]
 + [Tetgen(optional)](http://www.wias-berlin.de/software/tetgen/) [Windows,Linux]
 
+目前支持的库较少，后面会陆续补充常用的库
+
+## How to add a library to easylib
+
+目前easylib支持两种形式第三方库的添加：
++ 支持配置时自动从网上下载的第三方库，如tetgen, ceres;
++ 使用者预装好的第三方库，如boost, matlab；
+
+对于不同类型的库，easylib将采用不同的策略来进行配置。
+
+#### 1. 支持配置时自动从网上下载的第三方库
+TODO
+#### 2. 使用者预装好的第三方库
+TODO
+
 
 
 
