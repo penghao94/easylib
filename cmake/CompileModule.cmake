@@ -9,10 +9,10 @@ macro(COMPILE_MODULE module_name)
 
   if(${module_name} STREQUAL "core")
     file(GLOB SOURCES_ELIB_${module_name} 
-          "${ELIB_SOURCE_DIR}/easylib/*.cc" "${ELIB_SOURCE_DIR}/easylib/*.cpp" "${ELIB_SOURCE_DIR}/easylib/*.cxx")
+          "${ELIB_SOURCE_DIR}/easylib/*.cc" "${ELIB_SOURCE_DIR}/easylib/*.cpp" "${ELIB_SOURCE_DIR}/easylib/*.cxx" "${ELIB_SOURCE_DIR}/easylib/*.h" "${ELIB_SOURCE_DIR}/easylib/*.hpp")
   else()
     file(GLOB SOURCES_ELIB_${module_name}
-    "${ELIB_SOURCE_DIR}/${module_dir}/*.cpp" "${ELIB_SOURCE_DIR}/${module_dir}/*.cc" "${ELIB_SOURCE_DIR}/${module_dir}/*.cxx")
+    "${ELIB_SOURCE_DIR}/${module_dir}/*.cpp" "${ELIB_SOURCE_DIR}/${module_dir}/*.cc" "${ELIB_SOURCE_DIR}/${module_dir}/*.cxx" "${ELIB_SOURCE_DIR}/${module_dir}/*.h" "${ELIB_SOURCE_DIR}/${module_dir}/*.hpp")
     
   endif()
   
