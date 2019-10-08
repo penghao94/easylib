@@ -18,19 +18,20 @@ if(NOT TARGET elib::suitesparse)
                 message(FATEL_ERROR "Sorry, LAPACK and BLAS only support X86 arch on Windows...")
             endif()
             set(BLAS_LIBRARIES "${LAPACK_DIR}/libblas.lib")
-            message(STATUS "\ncmake -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/SuiteSparse -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}\n" )
+            message(STATUS "\n${CMAKE_COMMAND} -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}\n" )
             execute_process(COMMAND ${CMAKE_COMMAND} -S ${SUITESPARSE_ROOT_DIR} -B ${SUITESPARSE_ROOT_DIR}/build -G ${VS_TOOLSET} -A ${VS_ARCH} -DCMAKE_INSTALL_PREFIX=${SUITESPARSE_ROOT_DIR}/install -DSuiteSparse_USE_LAPACK_BLAS=true -DLAPACK_DIR=${LAPACK_DIR}
                                     WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR} OUTPUT_QUIET)
                 
             set(SUITESPARSE_BUILD_TYPE "Debug" "Release")
 
-            foreach(SBT ${SUITESPARSE_BUILD_TYPE})
-            message(STATUS "cmake --build . --target INSTALL --config ${SBT}\n" )
-            execute_process( COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${SBT} 
-                                WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build OUTPUT_QUIET)
+            foreach(sbt ${SUITESPARSE_BUILD_TYPE})
+            message(STATUS "${CMAKE_COMMAND} --build . --target INSTALL --config ${sbt}\n" )
+            execute_process(COMMAND ${CMAKE_COMMAND} --build . --target INSTALL --config ${sbt} WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build  OUTPUT_QUIET)
 
              ##For windows,we have to copy ${LAPACK_DIR}/*.dll to CMAKE_RUNTIME_OUTPUT_DIRECTORY
-             execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LAPACK_DLL} ${CMAKE_BINARY_DIR}/${cbt} WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build  OUTPUT_QUIET)
+             file(GLOB LAPACK_DLL ${LAPACK_DIR}/*.dll)
+             message(STATUS "${CMAKE_COMMAND} -E copy_if_different ${LAPACK_DLL} ${CMAKE_BINARY_DIR}/${sbt}\n" )
+             execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${LAPACK_DLL} ${CMAKE_BINARY_DIR}/${sbt} WORKING_DIRECTORY ${SUITESPARSE_ROOT_DIR}/build  OUTPUT_QUIET)
 
             endforeach()
         else()
