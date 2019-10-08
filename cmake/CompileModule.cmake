@@ -15,10 +15,10 @@ macro(COMPILE_MODULE module_name)
     "${ELIB_SOURCE_DIR}/${module_dir}/*.cpp" "${ELIB_SOURCE_DIR}/${module_dir}/*.cc" "${ELIB_SOURCE_DIR}/${module_dir}/*.cxx" "${ELIB_SOURCE_DIR}/${module_dir}/*.h" "${ELIB_SOURCE_DIR}/${module_dir}/*.hpp")
     
   endif()
-  
   set(elib_module_name "elib_${module_name}")
   string(TOUPPER ${module_name} SCOPE_NAME)
-  if(NOT ${SOURCES_ELIB_${module_name}} STREQUAL "")
+  list(LENGTH SOURCES_ELIB_${module_name} len)
+  if(len GREATER 0)
     if(USE_STATIC_LIBRARY )
       set(ELIB_SCOPE_WITH_${SCOPE_NAME} PUBLIC)
       add_library(${elib_module_name} STATIC ${SOURCES_ELIB_${module_name}})
