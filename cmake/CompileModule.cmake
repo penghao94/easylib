@@ -35,9 +35,9 @@ macro(COMPILE_MODULE module_name)
   endif()
 
   if(${module_name} STREQUAL "core")
-    target_link_libraries(${elib_module_name} ELIB_SCOPE_WITH_${SCOPE_NAME} elib_common) 
+    target_link_libraries(${elib_module_name} ${ELIB_SCOPE_WITH_${SCOPE_NAME}} elib_common) 
   else()
-    target_link_libraries(${elib_module_name} ELIB_SCOPE_WITH_${SCOPE_NAME} elib_core) 
+    target_link_libraries(${elib_module_name} ${ELIB_SCOPE_WITH_${SCOPE_NAME}} elib_core) 
   endif()
 
   message(STATUS "Creating target: elib::${module_name} (${elib_module_name})")
