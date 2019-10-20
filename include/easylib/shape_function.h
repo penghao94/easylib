@@ -19,18 +19,18 @@ namespace elib {
 	  *  \param[out] results    
 	  *  \return bool
 	 */
-	template<typename Derived>
+	template<typename DerivedPosition,typename DerivedCorner>
 	bool HexahedralShapeFunction(
-		const Eigen::PlainObjectBase<Derived> &position,
-		const  Eigen::PlainObjectBase<Derived>& corner,
-		Eigen::PlainObjectBase<Derived>& results);
+		const Eigen::MatrixBase<DerivedPosition> &position,
+		const  Eigen::MatrixBase<DerivedCorner>& corner,
+		Eigen::PlainObjectBase<DerivedCorner>& results);
 
 }
 
-template<typename Derived>
-bool elib::HexahedralShapeFunction(const Eigen::PlainObjectBase<Derived>& position, const Eigen::PlainObjectBase<Derived>& corner, Eigen::PlainObjectBase<Derived>& results)
+template<typename DerivedPosition, typename DerivedCorner>
+bool elib::HexahedralShapeFunction(const Eigen::MatrixBase<DerivedPosition>& position, const Eigen::MatrixBase<DerivedCorner>& corner, Eigen::PlainObjectBase<DerivedCorner>& results)
 {
-	typedef Eigen::Matrix<typename Derived::Scalar, Derived::RowsAtCompileTime, Derived::ColsAtCompileTime> Mat;
+	typedef Eigen::Matrix<typename DerivedPosition::Scalar, DerivedPosition::RowsAtCompileTime, DerivedPosition::ColsAtCompileTime> Mat;
 
 	if (corner.rows() != 8) {
 		std::cerr << "corner rows should be 8!" << std::endl;

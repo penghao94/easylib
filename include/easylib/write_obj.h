@@ -44,15 +44,15 @@ namespace elib {
 	template<typename DerivedPoint, typename DerivedIndex>
 	bool writeOBJ(const std::string & filename, const Eigen::MatrixBase<DerivedPoint>& vertices, const Eigen::MatrixBase<DerivedIndex>& facets)
 	{
-		assert(V.rows() == 3 && "V should have 3 columns");
+		assert(vertices.rows() != 3 && "V should have 3 columns");
 		std::ofstream file(filename);
 		if (!file.is_open()) {
 			fprintf(stderr, "writeOBJ() could not open %s\n", filename.c_str());
 			return false;
 		}
 
-		file << vertices.format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "v", "", "", "\n") <<
-			(facets.array() + 1).matrix().format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "f", "", "", "\n");
+		file << vertices.format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "v ", "", "", "\n")) <<
+			(facets.array() + 1).matrix().format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "f ", "", "", "\n"));
 
 		return true;
 	}
@@ -62,7 +62,7 @@ namespace elib {
 	template<typename DerivedPoint, typename DerivedIndex>
 	bool writeOBJ(const std::string & filename, const Eigen::MatrixBase<DerivedPoint>& vertices, Eigen::MatrixBase<DerivedIndex>& facets, const Eigen::MatrixBase<DerivedPoint>& colors,bool FACECOLOR)
 	{
-		assert(V.rows() == 3 && "V should have 3 columns");
+		assert(vertices.rows() != 3 && "V should have 3 columns");
 
 
 		std::string prefix, name, suffix;
@@ -93,19 +93,28 @@ namespace elib {
 		}
 
 		if (!FACECOLOR) {
+
+			if (vertices.rows() != colors.rows()) {
+				fprintf(stderr, "Colors should have the same rows with vertices!!");
+				return false;
+			}
 			for (int i = 0; i < vertices.rows(); i++) {
 				obj << "usemtl object_" << std::to_string(i) << "\n";
-				obj << vertices.row(i).format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "v", "", "", "");
+				obj << vertices.row(i).format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "v ", "", "", ""));
 			}
 
-			obj << (facets.array() + 1).matrix().format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "f", "", "\n", "\n");
+			obj << (facets.array() + 1).matrix().format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "f ", "", "\n", "\n"));
 		}
 		else {
-			obj << vertices.format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "v", "", "", "\n");
+			if (facets.rows() != colors.rows()) {
+				fprintf(stderr, "Colors should have the same rows with facets!!");
+				return false;
+			}
+			obj << vertices.format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "v ", "", "", "\n"));
 			auto facets_ = (facets.array() + 1).matrix();
 			for (int i = 0; i < facets_.rows(); i++) {
 				obj << "usemtl object_" << std::to_string(i) << "\n";
-				obj << facets_.row(i).format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols), " ", "\n", "f", "", "", "");
+				obj << facets_.row(i).format(Eigen::IOFormat(Eigen::FullPrecision, Eigen::DontAlignCols, " ", "\n", "f ", "", "", ""));
 			}
 		}
 		obj.close();
