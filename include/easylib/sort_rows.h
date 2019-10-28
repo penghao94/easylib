@@ -22,9 +22,9 @@ namespace elib {
 	 */
 	template<typename DerivedVector,typename DerivedIndex>
 	void sortRows(const Eigen::MatrixBase<DerivedVector> &input, const bool ascending, Eigen::PlainObjectBase<DerivedVector> &output, Eigen::PlainObjectBase<DerivedIndex> &indices);
-	template<typename DerivedVector, typename DerivedIndex>
+	template<typename DerivedVector>
 	void sortRows(const Eigen::MatrixBase<DerivedVector> &input, const bool ascending, Eigen::PlainObjectBase<DerivedVector> &output);
-	template<typename DerivedVector, typename DerivedIndex>
+	template<typename DerivedVector>
 	void sortRows(const Eigen::MatrixBase<DerivedVector> &input, Eigen::PlainObjectBase<DerivedVector> &output);
 	template<typename DerivedVector, typename DerivedIndex>
 	void sortRows(const Eigen::MatrixBase<DerivedVector> &input,Eigen::PlainObjectBase<DerivedVector> &output, Eigen::PlainObjectBase<DerivedIndex> &indices);
@@ -60,32 +60,32 @@ namespace elib {
 				return false;
 			};
 
-			std::sort(indices.data(), indices.data() + indices.rows(), less);
+			std::sort(indices.data(), indices.data() + indices.rows(), greater);
 		}
 
 		for (int r = 0; r < nr; ++r) 
 			for (int c = 0; c < nc; ++c) 
-				output.coeff(r, c) = input(indices(r), c);
+				output(r, c) = input(indices(r), c);
 	}
 
-	template<typename DerivedVector, typename DerivedIndex>
+	template<typename DerivedVector>
 	void sortRows(const Eigen::MatrixBase<DerivedVector>& input, const bool ascending, Eigen::PlainObjectBase<DerivedVector>& output)
 	{
-		Eigen::Matrix<int, DerivedIndex::RowsAtCompileTime, 1> indices;
-		elib::sortRows(input,ascending,output,indices)
+		Eigen::Matrix<int, Eigen::Dynamic, 1> indices;
+		elib::sortRows(input, ascending, output, indices);
 	}
 
-	template<typename DerivedVector, typename DerivedIndex>
+	template<typename DerivedVector>
 	void sortRows(const Eigen::MatrixBase<DerivedVector>& input, Eigen::PlainObjectBase<DerivedVector>& output)
 	{
-		Eigen::Matrix<int, DerivedIndex::RowsAtCompileTime, 1> indices;
-		elib::sortRows(input, true, output, indices)
+		Eigen::Matrix<int, Eigen::Dynamic, 1> indices;
+		elib::sortRows(input, true, output, indices);
 	}
 
 	template<typename DerivedVector, typename DerivedIndex>
 	void sortRows(const Eigen::MatrixBase<DerivedVector>& input, Eigen::PlainObjectBase<DerivedVector>& output, Eigen::PlainObjectBase<DerivedIndex>& indices)
 	{
-		elib::sortRows(input, true, output, indices)
+		elib::sortRows(input, true, output, indices);
 	}
 
 }

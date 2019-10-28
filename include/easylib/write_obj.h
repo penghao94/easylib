@@ -44,7 +44,7 @@ namespace elib {
 	template<typename DerivedPoint, typename DerivedIndex>
 	bool writeOBJ(const std::string & filename, const Eigen::MatrixBase<DerivedPoint>& vertices, const Eigen::MatrixBase<DerivedIndex>& facets)
 	{
-		assert(vertices.rows() != 3 && "V should have 3 columns");
+		assert(vertices.cols() == 3 && "V should have 3 columns");
 		std::ofstream file(filename);
 		if (!file.is_open()) {
 			fprintf(stderr, "writeOBJ() could not open %s\n", filename.c_str());
@@ -62,7 +62,7 @@ namespace elib {
 	template<typename DerivedPoint, typename DerivedIndex>
 	bool writeOBJ(const std::string & filename, const Eigen::MatrixBase<DerivedPoint>& vertices, Eigen::MatrixBase<DerivedIndex>& facets, const Eigen::MatrixBase<DerivedPoint>& colors,bool FACECOLOR)
 	{
-		assert(vertices.rows() != 3 && "V should have 3 columns");
+		assert(vertices.cols() != 3 && "V should have 3 columns");
 
 
 		std::string prefix, name, suffix;

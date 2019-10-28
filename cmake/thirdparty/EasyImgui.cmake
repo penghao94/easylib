@@ -4,7 +4,7 @@
 #
 
 #Dependices
-include(EasyGlfw.cmake)
+include(EasyGlfw)
 
 set(IMGUI_ROOT_DIR "${ELIB_EXTERNAL_DIR}/imgui")
 

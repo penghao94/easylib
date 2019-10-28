@@ -1,0 +1,6 @@
+{
+    "name": "libigl",
+    "git_repository": "https://github.com/libigl/libigl.git",
+    "git_tag": "v2.1.0",
+    "argn": ""
+}
