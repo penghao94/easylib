@@ -7,6 +7,9 @@
 set(LIBIGL_ROOT_DIR ${ELIB_EXTERNAL_DIR}/libigl)
 
 if(NOT TARGET elib::libigl)
+
+download_libigl()
+
 # For libigl, we just want to use its fundamental methods in igl/inlcude, but we allow user to option by adding libigl_with_xxx.
 set(LIBIGL_USE_STATIC_LIBRARY TRUE CACHE BOOL "" FORCE)
 include(${LIBIGL_ROOT_DIR}/cmake/libigl.cmake)
