@@ -92,7 +92,7 @@ if(NOT TARGET  elib::ceres)
       string(REGEX MATCH "LAPACK CONFIG QUIET" is_write ${content})
       if(NOT is_write)
          message(STATUS "Hack <prefix>/CMakelists.txt\n")
-         string(REGEX REPLACE ";" "\\\\\\\\\\\\\\\\\\\;" content ${content})#CMake will eat ; ╮(╯▽╰)╭... each REGEX need '\\\\'
+         string(REGEX REPLACE ";" "\\\\\\\\\\\;" content ${content})#CMake will eat ; ╮(╯▽╰)╭... each REGEX need '\\\\'
          string(REGEX REPLACE "LAPACK QUIET" "LAPACK CONFIG QUIET" content ${content})
          string(REGEX REPLACE "find_package\\(SuiteSparse\\)" "find_package(SuiteSparse CONFIG)\n\tset(SUITESPARSE_FOUND \${SuiteSparse_FOUND})\n\tset(SUITESPARSE_INCLUDE_DIRS \${SuiteSparse_INCLUDE_DIRS})\n\tset(SUITESPARSE_LIBRARIES \${SuiteSparse_LIBRARIES})\n" content ${content})
          string(REGEX REPLACE "find_package\\(Glog\\)" "find_package(Glog CONFIG)\nset(GLOG_FOUND \${Glog_FOUND})\nset(GLOG_LIBRARIES glog::glog)\n" 
